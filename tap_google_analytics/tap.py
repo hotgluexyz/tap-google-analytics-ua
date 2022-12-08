@@ -47,30 +47,24 @@ class TapGoogleAnalytics(Tap):
         ),
         # OAuth
         th.Property(
-            "oauth_credentials",
-            th.ObjectType(
-                th.Property(
-                    "access_token",
-                    th.StringType,
-                    description="Google Analytics Access Token",
-                ),
-                th.Property(
-                    "refresh_token",
-                    th.StringType,
-                    description="Google Analytics Refresh Token",
-                ),
-                th.Property(
-                    "client_id",
-                    th.StringType,
-                    description="Google Analytics Client ID",
-                ),
-                th.Property(
-                    "client_secret",
-                    th.StringType,
-                    description="Google Analytics Client Secret",
-                ),
-            ),
-            description="Google Analytics OAuth Credentials",
+            "access_token",
+            th.StringType,
+            description="Google Analytics Access Token",
+        ),
+        th.Property(
+            "refresh_token",
+            th.StringType,
+            description="Google Analytics Refresh Token",
+        ),
+        th.Property(
+            "client_id",
+            th.StringType,
+            description="Google Analytics Client ID",
+        ),
+        th.Property(
+            "client_secret",
+            th.StringType,
+            description="Google Analytics Client Secret",
         ),
         # Optional
         th.Property(
@@ -86,12 +80,12 @@ class TapGoogleAnalytics(Tap):
     ).to_dict()
 
     def _initialize_credentials(self):
-        if self.config.get("oauth_credentials"):
+        if self.config.get("access_token"):
             return GoogleCredentials(
-                access_token=self.config["oauth_credentials"]["access_token"],
-                refresh_token=self.config["oauth_credentials"]["refresh_token"],
-                client_id=self.config["oauth_credentials"]["client_id"],
-                client_secret=self.config["oauth_credentials"]["client_secret"],
+                access_token=self.config["access_token"],
+                refresh_token=self.config["refresh_token"],
+                client_id=self.config["client_id"],
+                client_secret=self.config["client_secret"],
                 token_expiry=None,  # let the library refresh the token if it is expired
                 token_uri="https://accounts.google.com/o/oauth2/token",
                 user_agent="tap-google-analytics (via singer.io)",
