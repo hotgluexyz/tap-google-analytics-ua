@@ -36,4 +36,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 # CLI declaration
-tap-google-analytics = 'tap_google_analytics.tap:TapGoogleAnalytics.cli'
+tap-google-analytics-ua = 'tap_google_analytics.tap:TapGoogleAnalytics.cli'
