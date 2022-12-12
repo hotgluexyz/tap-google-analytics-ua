@@ -145,5 +145,22 @@
       "ga:bounceRate",
       "ga:exitRate"
     ]
+  },
+  {
+    "name": "transaction",
+    "dimensions": [
+      "ga:date"
+    ],
+    "metrics": [
+      "ga:users",
+      "ga:sessions",
+      "ga:CPC",
+      "ga:RPC",
+      "ga:costPerConversion",
+      "ga:goalConversionRateAll",
+      "ga:transactions",
+      "ga:transactionRevenue",
+      "ga:transactionTax"
+    ]
   }
 ]
