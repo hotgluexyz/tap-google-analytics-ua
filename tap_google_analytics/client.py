@@ -10,6 +10,7 @@ import backoff
 from googleapiclient.errors import HttpError
 from singer_sdk import typing as th
 from singer_sdk.streams import Stream
+from pendulum import parse
 
 from tap_google_analytics.error import (
     TapGaAuthenticationError,
@@ -41,7 +42,7 @@ class GoogleAnalyticsStream(Stream):
 
     def _get_end_date(self):
         end_date = self.config.get("end_date", datetime.utcnow().strftime("%Y-%m-%d"))
-        end_date_offset = datetime.strptime(end_date, "%Y-%m-%d") - timedelta(days=1)
+        end_date_offset = parse(end_date) - timedelta(days=1)
 
         return end_date_offset.strftime("%Y-%m-%d")
 
@@ -174,10 +175,7 @@ class GoogleAnalyticsStream(Stream):
     def _get_state_filter(self, context: Optional[dict]) -> str:
         state = self.get_context_state(context)
         state_bookmark = state.get("replication_key_value") or self.config["start_date"]
-        try:
-            parsed = datetime.strptime(state_bookmark, "%Y%m%d")
-        except ValueError:
-            parsed = datetime.strptime(state_bookmark, "%Y-%m-%d")
+        parsed = parse(state_bookmark)
         # state bookmarks need to be reformatted for API requests
         return datetime.strftime(parsed, "%Y-%m-%d")
 
